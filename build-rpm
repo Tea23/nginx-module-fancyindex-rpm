@@ -35,7 +35,8 @@ fi
 RPM_DIST=.$(egrep -o "^%el[0-9]*" "${RPM_MACROS}" | tr -d '%')
 echo "RPM_DIST: ${RPM_DIST} (${RPM_MACROS})"
 
-if [[ MODULE_VERSION == "1.26" ]]; then
+if [[ "${MODULE_VERSION}" == "1.26" ]]; then
+mkdir -p /etc/yum.repos.d
     dnf -y install yum-utils
 
     cat << EOF > /etc/yum.repos.d/nginx.repo
@@ -46,7 +47,7 @@ if [[ MODULE_VERSION == "1.26" ]]; then
         enabled=1
         gpgkey=https://nginx.org/keys/nginx_signing.key
         module_hotfixes=true
-    EOF
+EOF
 fi
 
 
