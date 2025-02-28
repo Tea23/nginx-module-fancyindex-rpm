@@ -54,27 +54,9 @@ fi
 # Install nginx and setup spec file
 echo
 echo "Installing nginx"
-if [[ -z "${REPOSITORY}" ]]; then
     # Non-modular package version
     dnf -y install nginx
-else
-    # Modular package version
-    if [[ -z "${MODULE_VERSION}" ]]; then
-        echo "Error: MODULE_VERSION is required for el8 or later"
-        exit 1
-    fi
 
-    # EPEL 8 Modularity was going away on February 15, 2023
-    if [[ "${REPOSITORY}" = "epel-modular" ]]; then
-        dnf -y install epel-release
-        dnf config-manager --enable epel-modular
-        dnf clean all
-    fi
-
-    dnf -y module reset nginx
-    echo "Installing nginx:${MODULE_VERSION} on ${REPOSITORY}"
-    dnf -y module install nginx:${MODULE_VERSION}/common
-fi
 # 2:1.20.1-20.el9.alma.1 -> 2
 NGINX_EPOCH_VERSION=$(dnf info -q nginx | grep ^Epoch |  awk '{ print $3 }')
 sed -e "s/@NGINX_EPOCH_VERSION@/${NGINX_EPOCH_VERSION}/g" "SPECS/${SPEC_FILE_NAME}.in" > "SPECS/${SPEC_FILE_NAME}.tmp"
