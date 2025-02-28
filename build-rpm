@@ -39,17 +39,18 @@ if [[ "${MODULE_VERSION}" == "1.26" ]]; then
 mkdir -p /etc/yum.repos.d
     dnf -y install yum-utils
 
-    cat > /etc/yum.repos.d/nginx.repo <<-'EOF'
+cat > /etc/yum.repos.d/nginx.repo <<'EOF'
 [nginx-stable]
 name=nginx stable repo
 baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
 gpgcheck=1
 enabled=1
 gpgkey=https://nginx.org/keys/nginx_signing.key
- odule_hotfixes=true
+module_hotfixes=true
 EOF
 
 cat /etc/yum.repos.d/nginx.repo
+
 fi
 
 
